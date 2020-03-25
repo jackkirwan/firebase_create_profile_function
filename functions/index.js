@@ -11,9 +11,15 @@ exports.createProfile = functions.region('europe-west1').auth.user().onCreate(us
     // Do something after a new user account is created
     const doc = admin.firestore().doc(`/users/${user.uid}`)
     return doc.set({
-        display_name: user.display_name,
+        providerId: user.providerId,
+        uid: user.uid,
+        displayName: user.displayName,
+        photoUrl: user.photoUrl,
         email: user.email,
-        privacy_policy_version: 0,
-        t_and_c_version: 0
+        phoneNumber: user.phoneNumber,
+        agreements: {
+            privacyPolicyVersion: 0,
+            termsAndConditionsVersion: 0
+        }
     })
 });
