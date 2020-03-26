@@ -17,6 +17,9 @@ exports.createProfile = functions.region('europe-west1').auth.user().onCreate(us
         photoUrl: user.photoUrl,
         email: user.email,
         phoneNumber: user.phoneNumber,
+        location: '',
+        dateOfBirth: '',
+        gender: '',
         agreements: {
             privacyPolicyVersion: 0,
             termsAndConditionsVersion: 0
