@@ -20,6 +20,7 @@ exports.createProfile = functions.region('europe-west1').auth.user().onCreate(us
         location: '',
         dateOfBirth: '',
         gender: '',
+        providers: [user.providerId],
         agreements: {
             privacyPolicyVersion: 0,
             termsAndConditionsVersion: 0
