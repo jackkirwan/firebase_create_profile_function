@@ -9,21 +9,35 @@ admin.initializeApp(functions.config().firebase);
 //this function will create a user profile in firestore database
 exports.createProfile = functions.region('europe-west1').auth.user().onCreate(user => {
     // Do something after a new user account is created
-    const doc = admin.firestore().doc(`/users/${user.uid}`)
+    const doc = admin.firestore().doc(`/users/${user.uid}`);
+    var providers = [];
+    len = user.providerData.length;
+    for (i = 0; i < len; i++) {
+        if (user.providerData[i].providerId !== null) {
+            providers[providers.length] = user.providerData[i].providerId;
+        }
+    }
+
+    var creationTime = Date(user.metadata.creationTime);
+
     return doc.set({
-        providerId: user.providerId,
         uid: user.uid,
         displayName: user.displayName,
-        photoUrl: user.photoUrl,
+        photoURL: user.photoURL,
         email: user.email,
-        phoneNumber: user.phoneNumber,
-        location: '',
-        dateOfBirth: '',
-        gender: '',
-        providers: [user.providerId],
-        agreements: {
-            privacyPolicyVersion: 0,
-            termsAndConditionsVersion: 0
-        }
+        location: null,
+        dateOfBirth: null,
+        gender: null,
+        providers: providers,
+        privacyPolicy: {
+            version: 0,
+        },
+        termsAndConditions: {
+            version: 0,
+        },
+        contactPreferences: {
+            email: false
+        },
+        creationTime: creationTime
     })
 });
