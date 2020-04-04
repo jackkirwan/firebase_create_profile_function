@@ -18,7 +18,8 @@ exports.createProfile = functions.region('europe-west1').auth.user().onCreate(us
         }
     }
 
-    var creationTime = Date(user.metadata.creationTime);
+    var creationDate = new Date(user.metadata.creationTime);
+    var creationTime = admin.firestore.Timestamp.fromDate(creationDate);
 
     return doc.set({
         uid: user.uid,
